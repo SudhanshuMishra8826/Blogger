@@ -39,7 +39,7 @@ if ($_SESSION['authuser'] != 1) {
 
     $stmt->execute();
 
-    if ($_GET['type'] == 1) {
+    if (isset($_GET['type'])&&$_GET['type'] == 1) {
         echo "Blog Updated: You will be redirected to forum whrer you can see your post<br>";
         header('Refresh: 1 ; admindashboard.php');
     }

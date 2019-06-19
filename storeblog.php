@@ -57,7 +57,7 @@ if ($_SESSION['authuser'] != 1) {
     $stmt->execute();
     
     echo "Post Published : You will be redirected to forum whrer you can see your post<br>";
-    #header('Refresh: 1 ; adminblogs.php?type=0');
+    header('Refresh: 1 ; adminblogs.php?type=0');
     }else{
         $uname = $_SESSION['user'];
     #echo $uname;

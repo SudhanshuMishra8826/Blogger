@@ -105,7 +105,7 @@ while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '</td>';
 
     echo '<td style="text-align:center">';
-    echo '<a style="padding:3px 14px;" class="btn btn-primary" href="deleteaccount.php?type=1&&id=' . $row3['uid'] . '" >Delete</a>';
+    echo '<a style="padding:3px 14px;" class="btn btn-primary" href="deleteaccount.php?type=1&&id=' . $row3['uid'].'" >Delete</a>';
     echo '</td>';
     echo '</tr>';
 }

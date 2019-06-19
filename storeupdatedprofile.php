@@ -45,6 +45,24 @@ if ($_SESSION['authuser'] != 1) {
         $stmt->execute();
         echo "Account Updated : You will be redirected to login page <br>";
         header('Refresh: 1 ; login.php?type=1');
+    } 
+    elseif(isset($_GET['type']) && $_GET['type'] == 2) {
+
+        $id = $_REQUEST['id'];
+        $name = $_REQUEST['name'];
+        $pass = $_REQUEST['pwd'];
+        $email = $_REQUEST['email'];
+        $sql = "update users set uname=:name, pwd=:pass, email=:email where uid=:id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':pass', $pass);
+        $stmt->bindParam(':email', $email);
+
+        $stmt->execute();
+
+        #echo "Account Updated : You will be redirected to login page so you can log in with nwe credentials<br>";
+        header('Refresh: 1 ; admindashboard.php');
     } else {
 
         $id = $_REQUEST['id'];
@@ -61,7 +79,7 @@ if ($_SESSION['authuser'] != 1) {
         $stmt->execute();
 
         echo "Account Updated : You will be redirected to login page so you can log in with nwe credentials<br>";
-        header('Refresh: 1 ; login.php');
+        header('Refresh: 1 ; login.php?type=0');
     }
 
     ?>

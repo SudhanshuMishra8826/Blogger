@@ -78,7 +78,7 @@ $stmt->execute();
 while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
     #var_dump($row3);
     echo "<h1>Update Your Details</h1>";
-    echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php?type=1' onsubmit='return validateform()'>";
+    echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php?type=2' onsubmit='return validateform()'>";
     echo "User Id is Not Editable<br>";
     echo "Edit feilds you want to Update<br>";
 

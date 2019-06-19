@@ -260,6 +260,9 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                                 if ($row3['imageurl'] != null || $row3['imageurl'] != '') {
                                     echo '<img src="' . $row3['imageurl'] . '" class="rounded-circle">';
                                 }
+                                else{
+                                    echo '<img src="img/fc.jpeg" class="rounded-circle">';   
+                                }
                                 ?>
                                 <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
                                 <h3>User ID : <?php echo ucfirst($row3['id']); ?></h3>

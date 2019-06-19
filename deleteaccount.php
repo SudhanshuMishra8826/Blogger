@@ -32,14 +32,14 @@ if ($_SESSION['authuser'] != 1) {
         $id = $_GET['id'];
 
         $sql = "
-    DELETE FROM admin WHERE id=:id ";
+    DELETE FROM users WHERE uid=:id ";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
 
         echo "Account Deleted: You will be redirected to home page<br>";
-        header('Refresh: 1 ; index.php');
+        header('Refresh: 1 ; admindashboard.php');
     }
     else {
 
