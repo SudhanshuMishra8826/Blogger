@@ -108,7 +108,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 <div class="form-group form-inline">
                     <div class="form-group col-lg-6 col-md-6 name">
-                        (**** Blog Id is Not Editable*****)
+                        (**** Blog Id is Not Editable*****)<br>
                         <input type="text" value=<?php echo ucfirst($row3['bid']); ?> class="form-control" name="id" id="name" placeholder="BlogID" readonly>
                     </div>
                 </div>

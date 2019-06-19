@@ -25,7 +25,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <title>
-        Please Login
+        Blogs
     </title>
 
     <meta charset="UTF-8">
@@ -63,8 +63,9 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                         <ul class="nav navbar-nav menu_nav justify-content-center">
                             <li class="nav-item active"><a class="nav-link" href="dashboard.php">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">MyBlogs</a>
-                            <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="getbloguser.php">All Blogs</a>
+                            <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="login.php?type=0">Logout</a></li>
                     </div>
                 </div>
             </nav>
@@ -93,9 +94,9 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
     <section class="blog-post-area section-margin">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-14">
                     <div class="main_blog_details">
-                        <img class="img-fluid" src="img/blog/blog4.png" alt="">
+                        <img class="img-fluid rounded mx-auto d-block" src=<?php echo 'img/blog/blog' . $_GET['bg'] . '.png'; ?> alt="">
                         <a href="#">
                             <h4><?php echo ucfirst($row3['title']); ?></h4>
                         </a>
@@ -109,7 +110,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </div>
-                        <p><?php echo($row3['status']=='requested'?'<b>Status : Requested </b>': '');?></p>
+                        <p><?php echo ($row3['status'] == 'requested' ? '<b>Status : Requested </b>' : ''); ?></p>
                         <p><?php echo substr($row3['content'], 0, 30); ?></p>
                         <p><?php echo substr($row3['content'], 30, 60); ?></p>
                         <blockquote class="blockquote">

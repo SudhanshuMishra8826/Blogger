@@ -38,7 +38,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Admin Dash board</title>
+    <title>Admin Profile</title>
     <link rel="stylesheet" type="text/css" href="css/dash1.css">
 
     <link rel="stylesheet" href="css/style.css">
@@ -146,6 +146,39 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                 return false;
             }
         }
+        function getusers() {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("response").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "getusers.php", true);
+            xmlhttp.send();
+        }
+
+        function updateuser(id) {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("response").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "updateuser.php?id=" + id, true);
+            xmlhttp.send();
+        }
     </script>
 </head>
 
@@ -187,7 +220,6 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
         </nav>
-
         <!-- Page Content  -->
         <div id="content">
 
@@ -205,7 +237,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item active btn btn-light">
-                                <a class="nav-link">
+                                <a class="nav-link" href='adminprofile.php'>
                                     <span class="fas fa-cog"></span> Profile
                                 </a>
                             </li>
@@ -217,41 +249,47 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </nav>
+            <div id='response'>
             <main class="site-main">
                 <!--================Hero Banner start =================-->
                 <section class="mb-30px">
                     <div class="container">
                         <div class="hero-banner2">
                             <div class=" hero-banner__content">
-                            <?php
-                            if ($row3['imageurl'] != null || $row3['imageurl'] != '') {
-                                echo '<img src="'.$row3['imageurl'] . '" class="rounded-circle">';
-                            }
-                            ?>
-                            <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
-                            <h3>User ID : <?php echo ucfirst($row3['id']); ?></h3>
-                            <h3>Password : <?php echo ucfirst($row3['pwd']); ?></h3>
-                            <h3>Email : <?php echo ucfirst($row3['email']); ?></h3>
+                                <?php
+                                if ($row3['imageurl'] != null || $row3['imageurl'] != '') {
+                                    echo '<img src="' . $row3['imageurl'] . '" class="rounded-circle">';
+                                }
+                                ?>
+                                <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
+                                <h3>User ID : <?php echo ucfirst($row3['id']); ?></h3>
+                                <h3>Password : <?php echo ucfirst($row3['pwd']); ?></h3>
+                                <h3>Email : <?php echo ucfirst($row3['email']); ?></h3>
 
 
-                            <div class="col-md-12 text-center" style=" margin-top:50px;">
-                                <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofile()">
-                                    <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Details!</h5>
-                                </button>
-                                <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofileimage(<?php echo $row3['id']; ?>)">
-                                    <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Profile Image!</h5>
-                                </button>
+                                <div class="col-md-12 text-center" style=" margin-top:50px;">
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofile()">
+                                        <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Details!</h5>
+                                    </button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofileimage(<?php echo $row3['id']; ?>)">
+                                        <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Profile Image!</h5>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-        </div>
-        <br>
-        </section>
-        <div class=container id="txtHint" style="border: solid 4px; padding:50px; text-align:center"></div>
-        </main>
+                    <br>
+                </section>
+                <div class=container id="txtHint" style="border: solid 4px; padding:50px; text-align:center"></div>
+            </main>
 
-        <div class="col-md-12 text-center" style=" margin-top:50px;">
-            <a href=<?php echo "deleteaccount.php?type=1&&id=" . $row3['id'] ?> id="singlebutton" name="singlebutton" class="btn btn-primary">
-                <h5 style="color:white; padding-top:5px;"> Delete Account!</h5>
-            </a>
+            <div class="col-md-12 text-center" style=" margin-top:50px;">
+                <a href=<?php echo "deleteaccount.php?type=1&&id=" . $row3['id'] ?> id="singlebutton" name="singlebutton" class="btn btn-primary">
+                    <h5 style="color:white; padding-top:5px;"> Delete Account!</h5>
+                </a>
+            </div>]
+            </div>
         </div>
+    </div>
+</body>
+</html>

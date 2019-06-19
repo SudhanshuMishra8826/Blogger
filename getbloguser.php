@@ -15,7 +15,7 @@ if ($_SESSION['authuser'] != 1) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dash - Home</title>
+    <title>Dash - Blogs</title>
     <link rel="icon" href="img/Fevicon.png" type="image/png">
 
     <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
@@ -49,12 +49,24 @@ if ($_SESSION['authuser'] != 1) {
                             <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">All Blogs</a>
                             <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="login.php?type=0">Logout</a></li>
                     </div>
                 </div>
             </nav>
         </div>
     </header>
+    
+    <section class="mb-30px">
+      <div class="container">
+        <div class="hero-banner">
+          <div class="hero-banner__content">
+            <h3>View Our</h3>
+            <h1>Blogs</h1>
+            <h4>About our writers best experiences</h4>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="txtHint" class="blog-post-area section-margin mt-4">
         <?php
 
@@ -70,15 +82,17 @@ if ($_SESSION['authuser'] != 1) {
         $sql = "SELECT * from blog where status='published'";
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
+        $i=0;
 
         while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
             #var_dump($row3);
+            $j=$i%8;
             echo "<div class=\"container\">";
             echo "<div class=\"row\">";
             echo "<div class=\"col-lg-15\">";
-            echo '<div class="single-recent-blog-post" style="border:solid 4px #ff9; margin-left:150px; padding:5px 50px 5px 50px;">';
+            echo '<div class="single-recent-blog-post" style="border:solid 4px #ff9; margin-left:0px; padding:5px 50px 5px 50px;">';
             echo '<div class="thumb">';
-            echo '<img class="img-fluid" src="img/blog/blog2.png" alt="">';
+            echo '<img class="img-fluid" src="img/blog/blog'.$j.'.png" alt="">';
             echo '<ul class="thumb-info">';
             echo '<li><a href="#"><i class="ti-user"></i>' . $row3['uname'] . '</a></li>';
             echo '<li><a href="#"><i class="ti-notepad"></i>' . $row3['createdat'] . '</a></li>';
@@ -89,9 +103,11 @@ if ($_SESSION['authuser'] != 1) {
             echo '<h3>' . $row3['title'] . '</h3>';
             echo '</a>';
             echo '<p>' . ucfirst(substr($row3['content'], 0, 200)) . '......</p>';
-            echo '<a class="button" href="viewbloguser.php?id=' . $row3["bid"] . '" style="margin-left:50px;">Read More <i class="ti-arrow-right"></i></a>';
+            echo '<a class="button" href="viewbloguser.php?bg='.$j.'&&id=' . $row3["bid"] . '" style="margin-left:0px;">Read More <i class="ti-arrow-right"></i></a>';
             echo '</div>';
             echo '</div>';
+            $i=$i+1;
+
         }
 
 

@@ -99,7 +99,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                             <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
                             <li class="nav-item"><a class="nav-link" href="getbloguser.php">All Blogs</a>
                             <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">Logout</a></li>
+                            <li class="nav-item"><a class="nav-link" href="login.php?type=0">Logout</a></li>
                     </div>
                 </div>
             </nav>

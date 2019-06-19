@@ -15,7 +15,7 @@ session_unset();
             var email = document.myform.email.value;
 
 
-            if (name == null || name == "" || pass == null || pass == ""||email==''||email=='') {
+            if (name == null || name == "" || pass == null || pass == "" || email == '' || email == '') {
                 alert("Any feild can't be blank");
                 return false;
             }
@@ -51,8 +51,7 @@ session_unset();
 </head>
 
 <body>
-
-<header class="header_area">
+    <header class="header_area">
         <div class="main_menu">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container box_1620">
@@ -67,43 +66,51 @@ session_unset();
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav justify-content-center">
                             <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href=#>SignUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">LogIn</a>
+                            <li class="nav-item"><a class="nav-link" href="signup.php">SignUp</a></li>
+                            <!--<li class="nav-item"><a class="nav-link" href="login.php">LogIn</a>-->
                             <li class="nav-item submenu dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blogs</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">LogIn</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog-details.html">Blog Details</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="login.php?type=0">User</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="login.php?type=1">Admin</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item submenu dropdown">
+                                <a href="getblogsvisitors.php" class="nav-link dropdown-toggle">Blogs</a>
+                            </li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right navbar-social">
+                            <li><a href="#"><i class="ti-facebook"></i></a></li>
+                            <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
+                            <li><a href="#"><i class="ti-instagram"></i></a></li>
+                            <li><a href="#"><i class="ti-skype"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </nav>
         </div>
     </header>
     <div class='well' style='text-align:center; margin-top:40px; margin-bottom:30px;'>
-        <form name="myform" method="post" action="createuser.php" onsubmit="return validateform()">
+        <form style="margin-top:130px;" name="myform" method="post" action="createuser.php" onsubmit="return validateform()">
             <p>
                 Create Username :
                 <input type="text" name="name" />
             </p>
             <p>
-                Create Password :
+                Create Password : 
                 <input type="Password" name="pass" />
             </p>
             <p>
-                Enter Email :
+                Enter your Email : 
                 <input type="text" name="email" />
             </p>
             <p>
-                <input type="submit" name="submit" value="Submit" />
+                <input class='btn btn-dark'style="margin-left:120px;" type="submit" name="submit" value="Submit" />
             </p>
         </form>
-        <a href="login.php">Login</a>
     </div>
-    <a href="index.php" class="button">
-        <h4>Home Page</h4>
-    </a>
+    
 </body>
 
 </html>

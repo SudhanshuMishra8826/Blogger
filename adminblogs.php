@@ -46,6 +46,40 @@ if ($_SESSION['authuser'] != 1) {
                 return false;
             }
         }
+
+        function getusers() {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "getusers.php", true);
+            xmlhttp.send();
+        }
+
+        function updateuser(id) {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "updateuser.php?id=" + id, true);
+            xmlhttp.send();
+        }
     </script>
 </head>
 
@@ -54,24 +88,26 @@ if ($_SESSION['authuser'] != 1) {
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h4 class="brand"> Sensive</h4>
+                <h4 style="color: #3a414e;" class="brand"> Sensive</h4>
             </div>
 
             <ul class="list-unstyled components">
 
                 <li class="active">
-                    <a href="#">Home</a>
+                    <a href="admindashboard.php">Home</a>
 
                 </li>
                 <li class='dropdown-submenu'>
                     <a href="#">Blogs</a>
                     <ul class='list-unstyled components'>
-                        <li><a tabindex="-1" href="#">Published</a></li>
-                        <li><a tabindex="-1" href="#">Requested</a></li>
+                        <li>
+                            <a tabindex="-1" href="adminblogs.php?type=3">New Blog</a></li>
+                        <li><a tabindex="-1" href="adminblogs.php?type=0">Published</a></li>
+                        <li><a tabindex="-1" href="adminblogs.php?type=1">Requested</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Users</a>
+                    <a onclick="getusers()">Users</a>
                 </li>
                 <li>
                     <a href="#">Help</a>
@@ -89,7 +125,7 @@ if ($_SESSION['authuser'] != 1) {
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:0px;">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -102,8 +138,14 @@ if ($_SESSION['authuser'] != 1) {
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="login.php?type=1">Logout</a>
+                            <li class="nav-item active btn btn-light">
+                                <a class="nav-link" href='adminprofile.php'>
+                                    <span class="fas fa-cog"></span> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
+                                <a class="nav-link" href="login.php?type=1">
+                                    <span class="fas fa-power-off"></span> Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -126,15 +168,18 @@ if ($_SESSION['authuser'] != 1) {
                     $sql = "SELECT * from blog where status='published'";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute();
+                    $i = 0;
 
                     while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         #var_dump($row3);
+                        $j = $i % 8;
+
                         echo "<div class=\"container\">";
                         echo "<div class=\"row\">";
                         echo "<div class=\"col-lg-15\">";
-                        echo '<div class="single-recent-blog-post" style="border:solid 4px lightblue; margin-left:50px; padding:5px 50px 5px 50px;">';
+                        echo '<div class="single-recent-blog-post" style="border:solid 4px lightblue; margin-left:0px; padding:5px 50px 5px 50px;">';
                         echo '<div class="thumb">';
-                        echo '<img class="img-fluid" src="img/blog/blog2.png" alt="">';
+                        echo '<img class="img-fluid" src="img/blog/blog' . $j . '.png" alt="">';
                         echo '<ul class="thumb-info">';
                         echo '<li><a href="#"><i class="ti-user"></i>' . $row3['uname'] . '</a></li>';
                         echo '<li><a href="#"><i class="ti-notepad"></i>' . $row3['createdat'] . '</a></li>';
@@ -146,28 +191,32 @@ if ($_SESSION['authuser'] != 1) {
                         echo '</a>';
                         echo '<p>' . ucfirst(substr($row3['content'], 0, 150)) . '........</p>';
 
-                        echo '<a class="button" href="adminblogs.php?type=2&&action=0&&id=' . $row3["bid"] . '" style="margin-left:50px;">Read More <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="adminblogs.php?bg=' . $j . '&&type=2&&action=0&&id=' . $row3["bid"] . '" style="margin-left:0px;">Read More <i class="ti-arrow-right"></i></a>';
 
-                        echo '<a class="button" href="updateblogadmin.php?id=' . $row3["bid"] . '" style="margin-left:100px;">Edit <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="updateblogadmin.php?id=' . $row3["bid"] . '" style="margin-left:130px;">Edit <i class="ti-arrow-right"></i></a>';
 
-                        echo '<a class="button" href="deleteblog.php?type=1&&id=' . $row3['bid'] . '" style="margin-left:120px;">Delete <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="deleteblog.php?type=1&&id=' . $row3['bid'] . '" style="margin-left:130px;">Delete <i class="ti-arrow-right"></i></a>';
 
                         echo '</div>';
                         echo '</div>';
+                        $i = $i + 1;
                     }
                 } elseif ($_GET['type'] == 1) {
                     $sql = "SELECT * from blog where status='requested'";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute();
+                    $i = 0;
 
                     while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         #var_dump($row3);
+                        $j = $i % 8;
+
                         echo "<div class=\"container\">";
                         echo "<div class=\"row\">";
                         echo "<div class=\"col-lg-15\">";
-                        echo '<div class="single-recent-blog-post" style="border:solid 4px lightblue; margin-left:50px; padding:5px 50px 5px 50px;">';
+                        echo '<div class="single-recent-blog-post" style="border:solid 4px lightblue; margin-left:0px; padding:5px 50px 5px 50px;">';
                         echo '<div class="thumb">';
-                        echo '<img class="img-fluid" src="img/blog/blog2.png" alt="">';
+                        echo '<img class="img-fluid" src="img/blog/blog' . $j . '.png" alt="">';
                         echo '<ul class="thumb-info">';
                         echo '<li><a href="#"><i class="ti-user"></i>' . $row3['uname'] . '</a></li>';
                         echo '<li><a href="#"><i class="ti-notepad"></i>' . $row3['createdat'] . '</a></li>';
@@ -179,19 +228,21 @@ if ($_SESSION['authuser'] != 1) {
                         echo '</a>';
                         echo '<p>' . ucfirst(substr($row3['content'], 0, 150)) . '........</p>';
 
-                        echo '<a class="button" href="adminblogs.php?type=2&&action=0&&id=' . $row3["bid"] . '" style="margin-left:30px;">Read More <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="adminblogs.php?bg=' . $j . '&&type=2&&action=0&&id=' . $row3["bid"] . '" style="margin-left:0px;">Read More <i class="ti-arrow-right"></i></a>';
 
-                        echo '<a class="button" href="updateblogadmin.php?id=' . $row3["bid"] . '" style="margin-left:70px;">Edit <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="updateblogadmin.php?id=' . $row3["bid"] . '" style="margin-left:90px;">Edit <i class="ti-arrow-right"></i></a>';
 
-                        echo '<a class="button" href="deleteblog.php?type=1&&id=' . $row3["bid"] . '" style="margin-left:70px;">Delete <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="deleteblog.php?type=1&&id=' . $row3["bid"] . '" style="margin-left:90px;">Delete <i class="ti-arrow-right"></i></a>';
 
-                        echo '<a class="button" href="approveblog.php?id=' . $row3["bid"] . '" style="margin-left:70px;">Approve <i class="ti-arrow-right"></i></a>';
+                        echo '<a class="button" href="approveblog.php?id=' . $row3["bid"] . '" style="margin-left:90px;">Approve <i class="ti-arrow-right"></i></a>';
 
                         echo '</div>';
                         echo '</div>';
+                        $i = $i + 1;
                     }
                 } elseif ($_GET['type'] == 2) {
                     if ($_GET['action'] == 0) {
+
                         $sql = "SELECT * from blog where bid=?";
                         $stmt = $pdo->prepare($sql);
                         $stmt->execute([$_GET['id']]);
@@ -199,9 +250,9 @@ if ($_SESSION['authuser'] != 1) {
                         echo '<section class="blog-post-area section-margin">';
                         echo '<div class="container">';
                         echo '<div class="row">';
-                        echo '<div class="col-lg-8">';
+                        echo '<div class="col-lg-14">';
                         echo '<div class="main_blog_details">';
-                        echo '<img class="img-fluid" src="img/blog/blog4.png" alt="">';
+                        echo '<img class="img-fluid rounded mx-auto d-block" src="img/blog/blog' . $_GET['bg'] . '.png" alt="">';
                         echo '<a href="#">';
                         echo '<h4>' . ucfirst($row3['title']) . '</h4>';
                         echo '</a>';
@@ -269,6 +320,7 @@ if ($_SESSION['authuser'] != 1) {
                     echo '</div>';
                 }
                 ?>
+            </section>
 
 
 
@@ -278,20 +330,20 @@ if ($_SESSION['authuser'] != 1) {
 
 
 
-                <!-- jQuery CDN - Slim version (=without AJAX) -->
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-                <!-- Popper.JS -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-                <!-- Bootstrap JS -->
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+            <!-- jQuery CDN - Slim version (=without AJAX) -->
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <!-- Popper.JS -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+            <!-- Bootstrap JS -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('#sidebarCollapse').on('click', function() {
-                            $('#sidebar').toggleClass('active');
-                        });
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#sidebarCollapse').on('click', function() {
+                        $('#sidebar').toggleClass('active');
                     });
-                </script>
+                });
+            </script>
 </body>
 
 </html>

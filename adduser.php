@@ -17,7 +17,7 @@ if ($_SESSION['authuser'] != 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Admin Dash board</title>
+    <title>Admin- Add User</title>
     <link rel="stylesheet" type="text/css" href="css/dash1.css">
 
     <!-- Bootstrap CSS CDN -->
@@ -122,7 +122,7 @@ if ($_SESSION['authuser'] != 1) {
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:0px;">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -135,8 +135,14 @@ if ($_SESSION['authuser'] != 1) {
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="login.php?type=1">Logout</a>
+                            <li class="nav-item active btn btn-light">
+                                <a class="nav-link" href='adminprofile.php'>
+                                    <span class="fas fa-cog"></span> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
+                                <a class="nav-link" href="login.php?type=1">
+                                    <span class="fas fa-power-off"></span> Logout</a>
                             </li>
                         </ul>
                     </div>

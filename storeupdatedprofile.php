@@ -12,7 +12,7 @@ if ($_SESSION['authuser'] != 1) {
 
 <head>
     <title>
-        Update Blog
+        Update Profile
     </title>
 </head>
 

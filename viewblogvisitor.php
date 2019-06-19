@@ -18,13 +18,12 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <title>
-        Please Login
+        Blogs
     </title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dash - Home</title>
     <link rel="icon" href="img/Fevicon.png" type="image/png">
 
     <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
@@ -62,7 +61,14 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                         <ul class="nav navbar-nav menu_nav justify-content-center">
                             <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="signup.php">SignUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">LogIn</a>
+                            <!--<li class="nav-item"><a class="nav-link" href="login.php">LogIn</a>-->
+                            <li class="nav-item submenu dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">LogIn</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="login.php?type=0">User</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="login.php?type=1">Admin</a></li>
+                                </ul>
+                            </li>
                             <li class="nav-item submenu dropdown">
                                 <a href="getblogsvisitors.php" class="nav-link dropdown-toggle">Blogs</a>
                             </li>
@@ -84,10 +90,10 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
     <section class="blog-post-area section-margin">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-14">
                     <div class="main_blog_details">
-                        <img class="img-fluid" src="img/blog/blog4.png" alt="">
-                        <a href="#">
+                        <img class="img-fluid rounded mx-auto d-block" src=<?php echo 'img/blog/blog' . $_GET['bg'] . '.png'; ?> alt="">
+                        <a href="#"><br>
                             <h4><?php echo ucfirst($row3['title']); ?></h4>
                         </a>
                         <div class="user_details">

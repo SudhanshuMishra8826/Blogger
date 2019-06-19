@@ -28,7 +28,7 @@ if ($_SESSION['authuser'] != 1) {
     $dsn = "mysql:host=" . $servername . ";dbname=" . $dbname;
     $pdo = new PDO($dsn, $username, $password);
 
-    if($_GET['type']==1){
+    if(isset($_GET['type'])&&$_GET['type']==1){
 
     $uname = $_SESSION['user'];
     #echo $uname;

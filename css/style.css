@@ -853,6 +853,7 @@ a {
 }
 .single-recent-blog-post .thumb {
 	position: relative;
+	margin-left: 130px;
 }
 .single-recent-blog-post .thumb-info {
 	position: absolute;
@@ -1808,6 +1809,7 @@ a {
 	color: #3a414e;
 	margin-bottom: 20px;
 	margin-top: 30px;
+	margin-left: 10px;
 }
 .main_blog_details .user_details {
 	overflow: hidden;
@@ -1850,6 +1852,7 @@ a {
 	font-weight: 700;
 	color: #3a414e;
 	margin-bottom: 5px;
+	margin-right: 10px;
 }
 .main_blog_details .user_details .float-right .media .media-body p {
 	font-size: 13px;
@@ -1865,7 +1868,7 @@ a {
 .main_blog_details p {
 	font-size: 16px;
 	color: #797979;
-	margin-bottom: 15px;
+	margin: 15px;
 }
 .main_blog_details .blockquote {
 	background: #f2f3f7;

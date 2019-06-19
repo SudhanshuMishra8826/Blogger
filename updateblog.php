@@ -26,7 +26,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <head>
     <title>
-        Write Blog
+        Update Blog
     </title>
 
     <meta charset="UTF-8">
