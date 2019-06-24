@@ -47,14 +47,26 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
 
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
     <link rel="stylesheet" href="css/style.css">
     <script>
         function validateform() {
             var name = document.myform.name.value;
             var pass = document.myform.pass.value;
-            var email= document.myform.email.value;
+            var email = document.myform.email.value;
 
-            if (name == null || name == "" || pwd == null || pwd == ""|| email == null || email == "") {
+            if (name == null || name == "" || pwd == null || pwd == "" || email == null || email == "") {
+                alert("Any feild can't be blank");
+                return false;
+            }
+        }
+
+        function validateform2() {
+            var name = document.myform.name.value;
+            var email = document.myform.email.value;
+
+            if (name == null || name == "" || email == null || email == "") {
                 alert("Any feild can't be blank");
                 return false;
             }
@@ -76,35 +88,69 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             xmlhttp.open("GET", "updateprofile.php", true);
             xmlhttp.send();
         }
+
+
+        function changepassword() {
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "updatepassword.php", true);
+            xmlhttp.send();
+        }
+
+        function validatePassword() {
+            var currentPassword, newPassword, confirmPassword, output = true;
+
+            currentPassword = document.frmChange.currentPassword;
+            newPassword = document.frmChange.newPassword;
+            var pass = document.frmChange.newPassword.value;
+            confirmPassword = document.frmChange.confirmPassword;
+
+            if (!currentPassword.value) {
+                currentPassword.focus();
+                document.getElementById("currentPassword").innerHTML = "required";
+                output = false;
+            } else if (!newPassword.value) {
+                newPassword.focus();
+                document.getElementById("newPassword").innerHTML = "required";
+                output = false;
+            } else if (!confirmPassword.value) {
+                confirmPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "required";
+                output = false;
+            }
+            if (newPassword.value != confirmPassword.value) {
+                newPassword.value = "";
+                confirmPassword.value = "";
+                newPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "not same";
+                output = false;
+            }
+
+            var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+            if (!pass.match(passw)) {
+
+                output = false;
+                alert("Weak Password");
+            }
+            return output;
+        }
     </script>
 </head>
 
 <body>
-
-    <header class="header_area">
-        <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav justify-content-center">
-                            <li class="nav-item active"><a class="nav-link" href="dashboard.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="getbloguser.php">All Blogs</a>
-                            <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php?type=0">Logout</a></li>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php
+    include 'inc/userheader.php';
+    ?>
 
     <main class="site-main">
         <!--================Hero Banner start =================-->
@@ -113,14 +159,17 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                 <div class="hero-banner">
                     <div class="hero-banner__content">
                         <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
-                        <h3>User ID : <?php echo ucfirst($row3['uid']); ?></h3>
-                        <h3>Password : <?php echo ucfirst($row3['pwd']); ?></h3>
-                        <h3>Email : <?php echo ucfirst($row3['email']); ?></h3>
+                        <h3>Email : <?php echo $row3['email']; ?></h3>
 
 
                         <div class="col-md-12 text-center" style=" margin-top:50px;">
                             <button id="singlebutton" name="singlebutton" class="button" onclick="updateprofile()">
                                 <h5 style="color:white; padding-top:5px;"> Update Details!</h5>
+                            </button>
+                        </div>
+                        <div class="col-md-12 text-center" style=" margin-top:50px;">
+                            <button id="singlebutton" name="singlebutton" class="button" onclick="changepassword()">
+                                <h5 style="color:white; padding-top:5px;"> Change Password</h5>
                             </button>
                         </div>
                     </div>

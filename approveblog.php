@@ -34,9 +34,10 @@ if ($_SESSION['authuser'] != 1) {
     $stmt->bindParam(':bid', $bid);
     $stmt->execute();
 
-
-    echo "Blog Updated: You will be redirected to forum whrer you can see your post<br>";
-    header('Refresh: 1 ; adminblogs.php?type=1');
+    echo "<script>
+            alert('Blog Approved');
+           window.location.href='adminblogs.php?type=0';
+           </script>";
 
 
     ?>

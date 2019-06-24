@@ -41,7 +41,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="vendors/linericon/style.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
-
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <script>
         function validateform() {
@@ -54,52 +54,56 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             }
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#my_form_id').on('submit', function(e) {
+                //Stop the form from submitting itself to the server.
+                e.preventDefault();
+                var id = $('#id').val();
+                var name = $('#title').val();
+                var content = $('#content').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: 'storeupdatedblog.php',
+                    data: {
+                        id: id,
+                        name: name,
+                        content: content
+                    },
+                    success: function() {
+                        alert("Blog Updated");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
-    <header class="header_area">
-        <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav justify-content-center">
-                            <li class="nav-item active"><a class="nav-link" href="dashboard.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="signup.php">WriteUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">MyBlogs</a>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php
+    include 'inc/userheader.php';
+    ?>
 
     <div class="comment-form">
         <h2 style="text-align:center;">“Stories can conquer fear, you know. They can make the heart bigger.”</h2>
         </br>
         <h2>So Start Updating...........</h2>
-        <form name="myform" method="post" action='storeupdatedblog.php'>
+        <form id="my_form_id" name="myform" method="post" action='storeupdatedblog.php'>
 
             <div class="form-group form-inline">
                 <div class="form-group col-lg-6 col-md-6 name">
-                    (**** Blog Id is Not Editable*****)
-                    <input type="text" value=<?php echo ucfirst($row3['bid']); ?> class="form-control" name="id" id="name" placeholder="BlogID" readonly>
+
+                    <input type="hidden" value=<?php echo ucfirst($row3['bid']); ?> class="form-control" name="id" id="id" placeholder="BlogID" readonly>
                 </div>
             </div>
             <div class="form-group form-inline">
                 <div class="form-group col-lg-6 col-md-6 name">
-                    <input type="text" value=<?php echo ucfirst($row3['title']); ?> class="form-control" name="title" id="name" placeholder="Enter Title">
+                    <input type="text" value=<?php echo ucfirst($row3['title']); ?> class="form-control" name="title" id="title" placeholder="Enter Title">
                 </div>
             </div>
             <div class="form-group">
-                <textarea class="form-control mb-10" rows="5" name="content" placeholder="Write Your Story Here"><?php echo $row3["content"]; ?></textarea>
+                <textarea class="form-control mb-10" id="content" rows="5" name="content" placeholder="Write Your Story Here"><?php echo $row3["content"]; ?></textarea>
             </div>
 
             <p>

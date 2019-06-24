@@ -84,8 +84,8 @@ if ($_SESSION['authuser'] != 1) {
 
     $stmt->execute();
     
-    echo "Post Requested : Your request for publishing this blog has been made,<br>";
-    header('Refresh: 1 ; dashboard.php');
+    #echo "Post Requested : Your request for publishing this blog has been made,<br>";
+    #header('Refresh: 1 ; dashboard.php');
     }
 
     ?>

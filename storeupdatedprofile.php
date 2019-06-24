@@ -33,18 +33,18 @@ if ($_SESSION['authuser'] != 1) {
 
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
-        $pass = $_REQUEST['pwd'];
         $email = $_REQUEST['email'];
-        $sql = "update admin set name=:name, pwd=:pass, email=:email where id=:id";
+        $sql = "update admin set name=:name, email=:email where id=:id";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':pass', $pass);
         $stmt->bindParam(':email', $email);
 
         $stmt->execute();
-        echo "Account Updated : You will be redirected to login page <br>";
-        header('Refresh: 1 ; login.php?type=1');
+        echo "<script>
+            alert('Account Details Updated');
+           window.location.href='admindashboard.php';
+           </script>";
     } 
     elseif(isset($_GET['type']) && $_GET['type'] == 2) {
 
@@ -60,26 +60,28 @@ if ($_SESSION['authuser'] != 1) {
         $stmt->bindParam(':email', $email);
 
         $stmt->execute();
+        echo "<script>
+            alert('Account Details Updated');
+           window.location.href='admindashboard.php';
+           </script>";
 
         #echo "Account Updated : You will be redirected to login page so you can log in with nwe credentials<br>";
-        header('Refresh: 1 ; admindashboard.php');
     } else {
 
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
-        $pass = $_REQUEST['pwd'];
         $email = $_REQUEST['email'];
-        $sql = "update users set uname=:name, pwd=:pass, email=:email where uid=:id";
+        $sql = "update users set uname=:name, email=:email where uid=:id";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':pass', $pass);
         $stmt->bindParam(':email', $email);
 
         $stmt->execute();
-
-        echo "Account Updated : You will be redirected to login page so you can log in with nwe credentials<br>";
-        header('Refresh: 1 ; login.php?type=0');
+        echo "<script>
+            alert('Account Details Updated');
+           window.location.href='profile.php';
+           </script>";
     }
 
     ?>

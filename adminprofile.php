@@ -54,12 +54,11 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
     <script type="text/javascript">
+        //This function loads profile upload form
         function updateprofile() {
             if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
                 xmlhttp = new XMLHttpRequest();
             } else {
-                // code for IE6, IE5
                 xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
             xmlhttp.onreadystatechange = function() {
@@ -70,6 +69,24 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             xmlhttp.open("GET", "updateprofile.php?type=1", true);
             xmlhttp.send();
         }
+
+        //This loads password update form    
+        function updatepassword() {
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "updateadminpassword.php", true);
+            xmlhttp.send();
+        }
+
+        //This loads profile image form 
 
         function updateprofileimage(id) {
             if (window.XMLHttpRequest) {
@@ -87,12 +104,14 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             xmlhttp.open("GET", "updateprofileimage.php?id=" + id, true);
             xmlhttp.send();
         }
-
+        //This calls upload image function
         function submitForm(event, id) {
             // prevent default form submission
             event.preventDefault();
             uploadImage(id);
         }
+
+        //This function calls the php script to uploads image 
 
         function uploadImage(id) {
 
@@ -124,17 +143,17 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             ajax.open("POST", "upload.php?id=" + id, true);
             ajax.send(formData); // send the form data
         }
-
+        //error alert while image upload 
         function uploadError(error) {
             // called on error
             alert(error || 'Something went wrong');
         }
-
+        // Displays uploaded image 
         function showImage(url) {
             previewImage.src = url;
             uploadingText.style.display = "none";
         }
-
+        //form validation
         function validateform() {
             var name = document.myform.name.value;
             var pass = document.myform.pass.value;
@@ -146,6 +165,18 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
                 return false;
             }
         }
+
+        function validateform2() {
+            var name = document.myform.name.value;
+            var email = document.myform.email.value;
+
+
+            if (name == null || name == "" || email == null || email == "") {
+                alert("Any feild can't be blank");
+                return false;
+            }
+        }
+        //function to get all the users
         function getusers() {
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -163,6 +194,8 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             xmlhttp.send();
         }
 
+        //Function to load update user form
+
         function updateuser(id) {
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -179,120 +212,101 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
             xmlhttp.open("GET", "updateuser.php?id=" + id, true);
             xmlhttp.send();
         }
+
+        //Password checking and validation
+
+        function validatePassword() {
+            var currentPassword, newPassword, confirmPassword, output = true;
+
+            currentPassword = document.frmChange.currentPassword;
+            newPassword = document.frmChange.newPassword;
+            var pass = document.frmChange.newPassword.value;
+            confirmPassword = document.frmChange.confirmPassword;
+
+            if (!currentPassword.value) {
+                currentPassword.focus();
+                document.getElementById("currentPassword").innerHTML = "required";
+                output = false;
+            } else if (!newPassword.value) {
+                newPassword.focus();
+                document.getElementById("newPassword").innerHTML = "required";
+                output = false;
+            } else if (!confirmPassword.value) {
+                confirmPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "required";
+                output = false;
+            }
+            if (newPassword.value != confirmPassword.value) {
+                newPassword.value = "";
+                confirmPassword.value = "";
+                newPassword.focus();
+                document.getElementById("confirmPassword").innerHTML = "not same";
+                output = false;
+            }
+
+            var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+            if (!pass.match(passw)) {
+
+                output = false;
+                alert("Weak Password");
+            }
+            return output;
+        }
     </script>
+
 </head>
 
 <body style="font-family:'Lora';color: #3a414e;line-height: 1.333;">
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h4 style="color: #3a414e;" class="brand"> Sensive</h4>
-            </div>
+        <?php include 'inc/adminheader.php'; ?>
 
-            <ul class="list-unstyled components">
-
-                <li class="active">
-                    <a href="admindashboard.php">Home</a>
-
-                </li>
-                <li class='dropdown-submenu'>
-                    <a href="#">Blogs</a>
-                    <ul class='list-unstyled components'>
-                        <li>
-                            <a tabindex="-1" href="adminblogs.php?type=3">New Blog</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=0">Published</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=1">Requested</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a onclick="getusers()">Users</a>
-                </li>
-                <li>
-                    <a href="#">Help</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-
-            </ul>
-
-
-
-        </nav>
-        <!-- Page Content  -->
-        <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:0px;">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active btn btn-light">
-                                <a class="nav-link" href='adminprofile.php'>
-                                    <span class="fas fa-cog"></span> Profile
-                                </a>
-                            </li>
-                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
-                                <a class="nav-link" href="login.php?type=1">
-                                    <span class="fas fa-power-off"></span> Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
             <div id='response'>
-            <main class="site-main">
-                <!--================Hero Banner start =================-->
-                <section class="mb-30px">
-                    <div class="container">
-                        <div class="hero-banner2">
-                            <div class=" hero-banner__content">
-                                <?php
-                                if ($row3['imageurl'] != null || $row3['imageurl'] != '') {
-                                    echo '<img src="' . $row3['imageurl'] . '" class="rounded-circle">';
-                                }
-                                else{
-                                    echo '<img src="img/fc.jpeg" class="rounded-circle">';   
-                                }
-                                ?>
-                                <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
-                                <h3>User ID : <?php echo ucfirst($row3['id']); ?></h3>
-                                <h3>Password : <?php echo ucfirst($row3['pwd']); ?></h3>
-                                <h3>Email : <?php echo ucfirst($row3['email']); ?></h3>
+                <main class="site-main">
+                    <!--================Hero Banner start =================-->
+                    <section class="mb-30px">
+                        <div class="container">
+                            <div class="hero-banner2">
+                                <div class=" hero-banner__content">
+                                    <?php
+                                    if ($row3['imageurl'] != null || $row3['imageurl'] != '') {
+                                        echo '<img src="' . $row3['imageurl'] . '" class="rounded-circle" width="200" height="250" >';
+                                    } else {
+                                        echo '<img src="img/fc.jpeg" class="rounded-circle">';
+                                    }
+                                    ?>
+                                    <h1>Hello <?php echo ucfirst($_SESSION['user']); ?></h1>
+                                    <h3>Email : <?php echo ucfirst($row3['email']); ?></h3>
 
 
-                                <div class="col-md-12 text-center" style=" margin-top:50px;">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofile()">
-                                        <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Details!</h5>
-                                    </button>
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-primary" onclick="updateprofileimage(<?php echo $row3['id']; ?>)">
-                                        <h5 style="color:white; padding-top:5px; margin-bottom:3px;"> Update Profile Image!</h5>
-                                    </button>
+                                    <div class="col-md-12 text-center" style=" margin-top:50px;">
+                                        <button id="singlebutton" name="singlebutton" class="btn btn-light" onclick="updateprofile()">
+                                            <h5 style="padding-top:5px; margin-bottom:3px;"> Update Details!</h5>
+                                        </button>
+                                        <button id="singlebutton" name="singlebutton" class="btn btn-light" onclick="updateprofileimage(<?php echo $row3['id']; ?>)">
+                                            <h5 style="padding-top:5px; margin-bottom:3px;"> Update Profile Image!</h5>
+                                        </button>
+
+                                        <button id="singlebutton" name="singlebutton" class="btn btn-light" onclick="updatepassword()">
+                                            <h5 style="padding-top:5px; margin-bottom:3px;"> Update Password!</h5>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                </section>
-                <div class=container id="txtHint" style="border: solid 4px; padding:50px; text-align:center"></div>
-            </main>
+                        <br>
+                    </section>
+                    <div class=container id="txtHint" style="border: solid 4px; padding:50px; text-align:center"></div>
+                </main>
 
-            <div class="col-md-12 text-center" style=" margin-top:50px;">
-                <a href=<?php echo "deleteaccount.php?type=1&&id=" . $row3['id'] ?> id="singlebutton" name="singlebutton" class="btn btn-primary">
-                    <h5 style="color:white; padding-top:5px;"> Delete Account!</h5>
-                </a>
-            </div>]
+                <div class="col-md-12 text-center" style=" margin-top:50px;">
+                    <a href=<?php echo "deleteaccount.php?type=1&&id=" . $row3['id'] ?> id="singlebutton" name="singlebutton" class="btn btn-primary">
+                        <h5 style="color:white; padding-top:5px;"> Delete Account!</h5>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

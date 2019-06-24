@@ -36,14 +36,17 @@ if ($_SESSION['authuser'] != 1) {
     $stmt->bindParam(':bid', $bid);
 
     $stmt->execute();
-    if (isset($_GET['type'])&&$_GET['type'] == 1) {
-        echo "Blog Deleted: You will be redirected to forum whrer you can see your post<br>";
-        header('Refresh: 1 ; admindashboard.php');
-    }
-    else{
-        echo "Blog Deleted: You will be redirected to forum whrer you can see your post<br>";
-        header('Refresh: 1 ; dashboard.php');
-
+    if (isset($_GET['type']) && $_GET['type'] == 1) {
+        echo "<script>
+            alert('Blog Deleted');
+           window.location.href='adminblogs.php?type=0';
+           </script>";
+    } else {
+        #echo "Blog Deleted: You will be redirected to forum whrer you can see your post<br>";
+        echo "<script>
+       alert('Blog Deleted');
+           window.location.href='dashboard.php';
+           </script>";
     }
 
 

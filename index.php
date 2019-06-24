@@ -1,3 +1,19 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "blogdb";
+#echo "Movie Review of ".ucfirst($_POST['num'])."<br><br>";
+
+$dsn = "mysql:host=" . $servername . ";dbname=" . $dbname;
+$pdo = new PDO($dsn, $username, $password);
+
+$sql = "SELECT * from blog";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,47 +34,7 @@
 </head>
 <body>
   <!--================Header Menu Area =================-->
-  <header class="header_area">
-    <div class="main_menu">
-      <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container box_1620">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-            <ul class="nav navbar-nav menu_nav justify-content-center">
-              <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li> 
-              <li class="nav-item"><a class="nav-link" href="signup.php">SignUp</a></li> 
-              <!--<li class="nav-item"><a class="nav-link" href="login.php">LogIn</a>-->
-              <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">LogIn</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="login.php?type=0">User</a></li>
-                  <li class="nav-item"><a class="nav-link" href="login.php?type=1">Admin</a></li>
-                </ul>
-              </li>
-              <li class="nav-item submenu dropdown">
-                <a href="getblogsvisitors.php" class="nav-link dropdown-toggle">Blogs</a>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right navbar-social">
-              <li><a href="#"><i class="ti-facebook"></i></a></li>
-              <li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-              <li><a href="#"><i class="ti-instagram"></i></a></li>
-              <li><a href="#"><i class="ti-skype"></i></a></li>
-            </ul>
-          </div> 
-        </div>
-      </nav>
-    </div>
-  </header>
+  <?php include'inc/visitorheader.php' ?>
   <!--================Header Menu Area =================-->
   
   <main class="site-main">
@@ -80,66 +56,23 @@
     <section>
       <div class="container">
         <div class="owl-carousel owl-theme blog-slider">
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide1.png" href='getblogsvisitors.php' alt="">
+          <?php 
+          $i=1;
+          while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $j=$i%4;
+          echo '<div class="card blog__slide text-center">';
+          echo '<div class="blog__slide__img">';
+          echo '<img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide'.$j.'.png" href="viewblogvisitor.php?bg=' . $j . '&&id=' . $row3["bid"] . '" alt="">
             </div>
             <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
+              <a class="blog__slide__label" href="viewblogvisitor.php?bg=' . $j . '&&id=' . $row3["bid"] . '">Blog</a>
+              <h3><a href="viewblogvisitor.php?bg=' . $j . '&&id=' . $row3["bid"] . '">'.$row3['title'].'</a></h3>
+              <p>'.$row3['createdat'].'</p>
             </div>
-          </div>
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide2.png" href="getblogsvisitors.php" alt="">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
-            </div>
-          </div>
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide3.png"  href="getblogsvisitors.php" alt="">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
-            </div>
-          </div>
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide1.png" href="getblogsvisitors.php" alt="">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
-            </div>
-          </div>
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide2.png" href="getblogsvisitors.php" alt="">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
-            </div>
-          </div>
-          <div class="card blog__slide text-center">
-            <div class="blog__slide__img">
-              <img class="card-img rounded-0" src="img/blog/blog-slider/blog-slide3.png" href="getblogsvisitors.php" alt="">
-            </div>
-            <div class="blog__slide__content">
-              <a class="blog__slide__label" href="getblogsvisitors.php">Blog</a>
-              <h3><a href="getblogsvisitors.php">New york fashion week's continued the evolution</a></h3>
-              <p>2 days ago</p>
-            </div>
-          </div>
+          </div>';
+          $i++;
+          }
+          ?>
         </div>
       </div>
     </section>

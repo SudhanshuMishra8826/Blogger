@@ -57,6 +57,7 @@ if ($_SESSION['authuser'] != 1) {
     }
 </script>
 
+
 <?php
 
 $servername = "localhost";

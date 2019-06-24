@@ -22,6 +22,7 @@
     $name = $_POST["name"];
     $pass = $_POST["pass"];
     $email = $_POST['email'];
+    $pass= hash('sha256', $pass);
 
     $sql = "Insert into users(uname,pwd,email) values (:name,:pass,:email)";
     $stmt = $pdo->prepare($sql);
@@ -32,7 +33,7 @@
     if(isset($_GET["type"])&&$_GET["type"]==1){
         header('location: admindashboard.php');
     }else{
-    header('location: login.php');
+    header('location: login.php?type=0');
     }
 
     ?>

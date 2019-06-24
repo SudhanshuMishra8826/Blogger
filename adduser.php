@@ -68,14 +68,25 @@ if ($_SESSION['authuser'] != 1) {
 
         function validateform() {
             var name = document.myform.name.value;
-            var pass = document.myform.pass.value;
             var email = document.myform.email.value;
+            var pass = document.myform.pass.value;
 
+            var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 
-            if (name == null || name == "" || pwd == null || pwd == "" || email == null || email == "") {
+            if (name == null || name == "" || email == null || email == "") {
                 alert("Any feild can't be blank");
                 return false;
             }
+            else {
+                if (pass.match(passw)) {
+                    return true;
+                } else {
+
+                    alert("Try a better password with atleast One UPPERCASE CHARACTER, One LOWERCASE CHARACTER, and ONE NUMBER ");
+                    return false;
+                }
+            }
+
         }
     </script>
 </head>
@@ -83,70 +94,8 @@ if ($_SESSION['authuser'] != 1) {
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h4 class="brand"> Sensive</h4>
-            </div>
+        <?php include 'inc/adminheader.php'; ?>
 
-            <ul class="list-unstyled components">
-
-                <li class="active">
-                    <a href="admindashboard.php">Home</a>
-
-                </li>
-                <li class='dropdown-submenu'>
-                    <a href="#">Blogs</a>
-                    <ul class='list-unstyled components'>
-                        <li>
-                            <a tabindex="-1" href="adminblogs.php?type=3">New Blog</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=0">Published</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=1">Requested</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a onclick="getusers()">Users</a>
-                </li>
-                <li>
-                    <a href="#">Help</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-
-            </ul>
-
-
-
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:0px;">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active btn btn-light">
-                                <a class="nav-link" href='adminprofile.php'>
-                                    <span class="fas fa-cog"></span> Profile
-                                </a>
-                            </li>
-                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
-                                <a class="nav-link" href="login.php?type=1">
-                                    <span class="fas fa-power-off"></span> Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </nav>
             <h2>Hello <?php echo ucfirst($_SESSION["user"]); ?> !!!!</h2>
             <br>
@@ -165,7 +114,7 @@ if ($_SESSION['authuser'] != 1) {
                             </p>
                             <p>
                                 Enter Email :
-                                <input type="text" name="email" />
+                                <input type="email" name="email" />
                             </p>
                             <p>
                                 <input type="submit" name="submit" value="Submit" />

@@ -27,6 +27,7 @@ if ($_SESSION['authuser'] != 1) {
     <link rel="stylesheet" href="vendors/linericon/style.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
     <script>
@@ -40,47 +41,49 @@ if ($_SESSION['authuser'] != 1) {
             }
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#myformid').on('submit', function(e) {
+                //Stop the form from submitting itself to the server.
+                e.preventDefault();
+
+                var title = $('#name').val();
+                var content = $('#content').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: 'storeblog.php',
+                    data: {
+                        name: name,
+                        content: content
+                    },
+                    success: function() {
+                        alert("Blog Requested");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
 
-    <header class="header_area">
-        <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav justify-content-center">
-                            <li class="nav-item active"><a class="nav-link" href="dashboard.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="getbloguser.php">All Blogs</a>
-                            <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php">Logout</a></li>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php
+    include 'inc/userheader.php';
+    ?>
 
     <div class="comment-form">
         <h2 style="text-align:center;">“Stories can conquer fear, you know. They can make the heart bigger.”</h2>
         </br>
         <h2>So Start Writing...........</h2>
-        <form name="myform" method="post" action='storeblog.php' onsubmit="return validateform()">
+        <form id="myformid" name="myform" method="post" action='storeblog.php' onsubmit="return validateform()">
             <div class="form-group form-inline">
                 <div class="form-group col-lg-6 col-md-6 name">
                     <input type="text" class="form-control" name="title" id="name" placeholder="Enter Title">
                 </div>
             </div>
             <div class="form-group">
-                <textarea class="form-control mb-10" rows="5" name="content" placeholder="Write Your Story Here"></textarea>
+                <textarea id="content" class="form-control mb-10" rows="5" name="content" placeholder="Write Your Story Here"></textarea>
             </div>
 
             <p>

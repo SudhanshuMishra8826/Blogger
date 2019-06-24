@@ -16,6 +16,7 @@ if ($_SESSION['authuser'] != 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dash - Home</title>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="icon" href="img/Fevicon.png" type="image/png">
 
     <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">

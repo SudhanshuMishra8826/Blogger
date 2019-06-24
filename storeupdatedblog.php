@@ -29,9 +29,9 @@ if ($_SESSION['authuser'] != 1) {
     $pdo = new PDO($dsn, $username, $password);
 
     $bid=$_REQUEST['id'];
-    $title=$_REQUEST['title'];
+    $title=$_REQUEST['name'];
     $content=$_REQUEST['content'];
-    $sql = "update blog set title=:title, content=:content where bid=:bid";
+    $sql = "update blog set title=:title, content=:content, status='requested' where bid=:bid";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':bid', $bid);
     $stmt->bindParam(':title', $title);
@@ -40,12 +40,16 @@ if ($_SESSION['authuser'] != 1) {
     $stmt->execute();
 
     if (isset($_GET['type'])&&$_GET['type'] == 1) {
-        echo "Blog Updated: You will be redirected to forum whrer you can see your post<br>";
-        header('Refresh: 1 ; admindashboard.php');
+        echo "<script>
+            alert('Blog Updated');
+           window.location.href='adminblogs.php?type=0';
+           </script>";
+        #echo "Blog Updated: You will be redirected to forum whrer you can see your post<br>";
+        #header('Refresh: 1 ; admindashboard.php');
     }
     else{
-    echo "Blog Updated : You will be redirected to forum whrer you can see your post<br>";
-    header('Refresh: 1 ; dashboard.php');
+    #echo "Blog Updated : You will be redirected to forum whrer you can see your post<br>";
+    #header('Refresh: 1 ; dashboard.php');
     }
 
     ?>

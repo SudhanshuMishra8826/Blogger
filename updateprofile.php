@@ -75,15 +75,14 @@ if (isset($_GET['type']) && $_GET['type'] == 1) {
     while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
         #var_dump($row3);
         echo "<h1>Update Your Details</h1>";
-        echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php?type=1' onsubmit='return validateform()'>";
-        echo "User Id is Not Editable<br>";
-        echo "Edit feilds you want to Update<br>";
+        echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php?type=1' onsubmit='return validateform2()'>";
 
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['id'] . " class=\"form-control\" name=\"id\" id=\"name\" placeholder=\"BlogID\" readonly>";
+        echo "<input type=\"hidden\" value=" . $row3['id'] . " class=\"form-control\" name=\"id\" id=\"name\" placeholder=\"BlogID\" readonly>";
         echo "</div>";
         echo "</div>";
+
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
         echo "<input type=\"text\" value=" . $row3['name'] . " class=\"form-control\" name=\"name\" id=\"name\" placeholder=\"Enter Title\">";
@@ -92,13 +91,7 @@ if (isset($_GET['type']) && $_GET['type'] == 1) {
 
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['pwd'] . " class=\"form-control\" name=\"pwd\" id=\"name\" placeholder=\"Enter Title\">";
-        echo "</div>";
-        echo "</div>";
-
-        echo "<div class=\"form-group form-inline\">";
-        echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['email'] . " class=\"form-control\" name=\"email\" id=\"name\" placeholder=\"Enter Title\">";
+        echo "<input type=\"email\" value=" . $row3['email'] . " class=\"form-control\" name=\"email\" id=\"email\" placeholder=\"Enter Title\">";
         echo "</div>";
         echo "</div>";
         echo "<p>";
@@ -120,15 +113,17 @@ if (isset($_GET['type']) && $_GET['type'] == 1) {
     while ($row3 = $stmt->fetch(PDO::FETCH_ASSOC)) {
         #var_dump($row3);
         echo "<h1>Update Your Details</h1>";
-        echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php' onsubmit='return validateform()'>";
-        echo "User Id is Not Editable<br>";
+        echo "<form name=\"myform\" method=\"post\" action='storeupdatedprofile.php' onsubmit='return validateform2()'>";
+
         echo "Edit feilds you want to Update<br>";
+
 
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['uid'] . " class=\"form-control\" name=\"id\" id=\"name\" placeholder=\"BlogID\" readonly>";
+        echo "<input type=\"hidden\" value=" . $row3['uid'] . " class=\"form-control\" name=\"id\" id=\"id\" placeholder=\"BlogID\" readonly>";
         echo "</div>";
         echo "</div>";
+                
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
         echo "<input type=\"text\" value=" . $row3['uname'] . " class=\"form-control\" name=\"name\" id=\"name\" placeholder=\"Enter Title\">";
@@ -137,13 +132,7 @@ if (isset($_GET['type']) && $_GET['type'] == 1) {
 
         echo "<div class=\"form-group form-inline\">";
         echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['pwd'] . " class=\"form-control\" name=\"pwd\" id=\"name\" placeholder=\"Enter Title\">";
-        echo "</div>";
-        echo "</div>";
-
-        echo "<div class=\"form-group form-inline\">";
-        echo "<div class=\"form-group col-lg-6 col-md-6 name\">";
-        echo "<input type=\"text\" value=" . $row3['email'] . " class=\"form-control\" name=\"email\" id=\"name\" placeholder=\"Enter Title\">";
+        echo "<input type=\"email\" value=" . $row3['email'] . " class=\"form-control\" name=\"email\" id=\"email\" placeholder=\"Enter Title\">";
         echo "</div>";
         echo "</div>";
         echo "<p>";

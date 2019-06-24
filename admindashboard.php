@@ -7,7 +7,7 @@ session_cache_limiter(false);
 session_start();
 if (isset($_POST['name']) && isset($_POST["pass"])) {
     $_SESSION["user"] = $_POST['name'];
-    $_SESSION["password"] = $_POST['pass'];
+    $_SESSION["password"] = hash('sha256', $_POST['pass']);
 
     $_SESSION["authuser"] = 0;
 
@@ -28,7 +28,10 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
     if (($_SESSION["password"] == $row['pwd'])) {
         $_SESSION["authuser"] = 1;
     } else if ($_SESSION["authuser"] == 1) { } else {
-        echo " Access not granted ";
+        echo "<script>
+        alert('Incorrect user id or password');
+            window.location.href='login.php?type=1';
+            </script>";
         exit();
     }
 } elseif ($_SESSION["authuser"] == 1) {
@@ -65,10 +68,10 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
 
     <title>Admin Dash board</title>
     <link rel="stylesheet" type="text/css" href="css/dash1.css">
-
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!--<link rel="stylesheet" href="style.css">-->
 
     <!-- Font Awesome JS -->
@@ -77,6 +80,8 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
 
 
     <script type="text/javascript">
+
+    //Function to get all the user
         function getusers() {
             if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -93,6 +98,8 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
             xmlhttp.open("GET", "getusers.php", true);
             xmlhttp.send();
         }
+
+    //Function to update user
 
         function updateuser(id) {
             if (window.XMLHttpRequest) {
@@ -111,6 +118,7 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
             xmlhttp.send();
         }
 
+    //Function to validate form
 
         function validateform() {
             var name = document.myform.name.value;
@@ -129,72 +137,8 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
 <body style="font-family:'Lora';color: #3a414e;line-height: 1.333;">
 
     <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h4  style="color: #3a414e;" class="brand"> Sensive</h4>
-            </div>
-
-            <ul class="list-unstyled components">
-
-                <li class="active">
-                    <a href="admindashboard.php">Home</a>
-
-                </li>
-                <li class='dropdown-submenu'>
-                    <a href="#">Blogs</a>
-                    <ul class='list-unstyled components'>
-                        <li>
-                            <a tabindex="-1" href="adminblogs.php?type=3">New Blog</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=0">Published</a></li>
-                        <li><a tabindex="-1" href="adminblogs.php?type=1">Requested</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a onclick="getusers()">Users</a>
-                </li>
-                <li>
-                    <a href="#">Help</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-
-            </ul>
-
-
-
-        </nav>
-
-        <!-- Page Content  -->
-        <div id="content">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active btn btn-light">
-                                <a class="nav-link" href='adminprofile.php'>
-                                    <span class="fas fa-cog"></span> Profile
-                                </a>
-                            </li>
-                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
-                                <a class="nav-link" href="login.php?type=1">
-                                    <span class="fas fa-power-off"></span> Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <?php include 'inc/adminheader.php'; ?>
+        
             <h2>Hello <?php echo ucfirst($_SESSION["user"]); ?> !!!!</h2>
             <br>
             <div id='response'>
@@ -210,16 +154,6 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
                         <tr style="margin-top: 0px; border-top: solid; border-color:#fff;">
 
                             <td>Username : <b><?php echo ucfirst($row['name']); ?></b></td>
-
-                        </tr>
-                        <tr style="margin-top: 0px; border-top: solid; border-color:#fff;">
-
-                            <td>Password : <b><?php echo $row['pwd']; ?></b></td>
-
-                        </tr>
-                        <tr style="margin-top: 0px; border-top: solid; border-color:#fff;">
-
-                            <td>Admin Id : <b><?php echo $row['id']; ?></b></td>
 
                         </tr>
                         <tr style="margin-top: 0px; border-top: solid; border-color:#fff;">

@@ -37,9 +37,10 @@ if ($_SESSION['authuser'] != 1) {
         $stmt->bindParam(':id', $id);
 
         $stmt->execute();
-
-        echo "Account Deleted: You will be redirected to home page<br>";
-        header('Refresh: 1 ; admindashboard.php');
+        echo "<script>
+       alert('Account Deleted');
+           window.location.href='admindashboard.php';
+           </script>";
     }
     else {
 
@@ -52,9 +53,10 @@ if ($_SESSION['authuser'] != 1) {
 
         $stmt->execute();
 
-
-            echo "Account Deleted: You will be redirected to home page<br>";
-            header('Refresh: 1 ; index.php');
-        }
+            echo "<script>
+            alert('Account Deleted');
+            window.location.href='index.php';
+            </script>";
+    }
     
     ?>

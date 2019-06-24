@@ -7,7 +7,7 @@ session_cache_limiter(false);
 session_start();
 if (isset($_POST['name']) && isset($_POST["pass"])) {
     $_SESSION["user"] = $_POST['name'];
-    $_SESSION["password"] = $_POST['pass'];
+    $_SESSION["password"] = hash('sha256', $_POST['pass']);
 
     $_SESSION["authuser"] = 0;
 
@@ -28,7 +28,10 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
     if (($_SESSION["password"] == $row['pwd'])) {
         $_SESSION["authuser"] = 1;
     } else if ($_SESSION["authuser"] == 1) { } else {
-        echo " Access not granted ";
+        echo "<script>
+       alert('Incorrect UserName or Password');
+           window.location.href='login.php?type=0';
+           </script>";
         exit();
     }
 } elseif ($_SESSION["authuser"] == 1) { } else {
@@ -57,6 +60,7 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
     <link rel="stylesheet" href="vendors/linericon/style.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
     <script>
@@ -87,33 +91,36 @@ if (isset($_POST['name']) && isset($_POST["pass"])) {
                 xmlhttp.send();
             }
     </script>
+    <script>
+            $(document).ready(function() {
+                $('#my_form_id').on('submit', function(e) {
+                    //Stop the form from submitting itself to the server.
+                    e.preventDefault();
+                    var id = $('#id').val();
+                    var name = $('#name').val();
+                    var content = $('#content').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'storeupdatedblog.php',
+                        data: {
+                            id:id,
+                            name: name,
+                            content: content
+                        },
+                        success: function() {
+                            alert("Blog Updated");
+                        }
+                    });
+                });
+            });
+    </script>
 </head>
 
 <body>
-    <header class="header_area">
-        <div class="main_menu">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container box_1620">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav menu_nav justify-content-center">
-                            <li class="nav-item active"><a class="nav-link" href="dashboard.php">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="writeblog.php">WriteUp</a></li>
-                            <li class="nav-item"><a class="nav-link" href="getbloguser.php">All Blogs</a>
-                            <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="login.php?type=0">Logout</a></li>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+    <?php 
+        include 'inc/userheader.php';
+    ?>
 
     <main class="site-main">
         <!--================Hero Banner start =================-->

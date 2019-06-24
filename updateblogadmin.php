@@ -49,24 +49,26 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h4 class="brand"> Sensive</h4>
+            <img style="margin-left:35px;" src="img/Blogger-2.png" alt="">
             </div>
 
             <ul class="list-unstyled components">
 
                 <li class="active">
-                    <a href="#">Home</a>
+                    <a href="admindashboard.php">Home</a>
 
                 </li>
                 <li class='dropdown-submenu'>
                     <a href="#">Blogs</a>
                     <ul class='list-unstyled components'>
+                        <li>
+                            <a tabindex="-1" href="adminblogs.php?type=3">New Blog</a></li>
                         <li><a tabindex="-1" href="adminblogs.php?type=0">Published</a></li>
                         <li><a tabindex="-1" href="adminblogs.php?type=1">Requested</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Users</a>
+                    <a onclick="getusers()">Users</a>
                 </li>
                 <li>
                     <a href="#">Help</a>
@@ -80,6 +82,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
         </nav>
+
 
         <!-- Page Content  -->
         <div id="content">
@@ -97,8 +100,14 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="login.php?type=1">Logout</a>
+                            <li class="nav-item active btn btn-light">
+                                <a class="nav-link" href='adminprofile.php'>
+                                    <span class="fas fa-cog"></span> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item active btn btn-light" style="margin-left:4px;">
+                                <a class="nav-link" href="login.php?type=1">
+                                    <span class="fas fa-power-off"></span> Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -108,8 +117,7 @@ $row3 = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 <div class="form-group form-inline">
                     <div class="form-group col-lg-6 col-md-6 name">
-                        (**** Blog Id is Not Editable*****)<br>
-                        <input type="text" value=<?php echo ucfirst($row3['bid']); ?> class="form-control" name="id" id="name" placeholder="BlogID" readonly>
+                        <input type="hidden" value=<?php echo ucfirst($row3['bid']); ?> class="form-control" name="id" id="name" placeholder="BlogID" readonly>
                     </div>
                 </div>
                 <div class="form-group form-inline">
