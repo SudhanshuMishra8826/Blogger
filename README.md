@@ -14,3 +14,11 @@ The website serves different pages to different types of users based on their ac
 | Admin | Yes, All | Yes, All | Enabled |
 
 Detailed Documentation available at : https://docs.google.com/document/d/1cXJnFnnsAvqsoqnBP4kYsGjtEn4Isfzie5T3YQas5Gs/edit?usp=sharing
+
+Website Live at: https://as990765.000webhostapp.com/
+
+Demo Account User : Username=sudhanshu
+                    Password=SUdhanshu@22
+                    
+Demo Account Admin: Username=qwerty
+                    Password=SUdhanshu@22
